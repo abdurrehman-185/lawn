@@ -1,65 +1,66 @@
-import Image from "next/image";
+import {
+  CtaBand,
+  FaqList,
+  FeatureGrid,
+  GalleryPreview,
+  HomeHero,
+  ProcessGrid,
+  ReviewsPreview,
+  ServiceAreasPreview,
+  ServicesGrid,
+  TrustStrip,
+} from "@/components/marketing";
+import { JsonLd } from "@/components/site-shell";
+import {
+  buildFaqSchema,
+  buildLocalBusinessSchema,
+  buildMetadata,
+} from "@/lib/seo";
+import {
+  homeFaqs,
+  homepageServiceCards,
+  processSteps,
+  whyChooseUs,
+} from "@/lib/site-data";
+
+export const metadata = buildMetadata({
+  title: "Lawn Care & Landscaping in [City]",
+  description:
+    "Premium lawn care, landscaping, yard cleanup, and snow removal for homeowners and small commercial properties in [City] and [Service Area].",
+  path: "/",
+});
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <JsonLd data={buildLocalBusinessSchema()} />
+      <JsonLd data={buildFaqSchema(homeFaqs)} />
+      <HomeHero />
+      <TrustStrip />
+      <ServicesGrid items={homepageServiceCards} />
+      <FeatureGrid
+        eyebrow="Why Choose Us"
+        title="The kind of local service that makes the property feel cared for"
+        copy="The strongest contractor websites do not overpromise. They show clear standards, dependable communication, and the kind of finish customers actually notice."
+        items={whyChooseUs}
+      />
+      <ProcessGrid
+        title="A simple process built around clear service and clean results"
+        copy="This homepage flow is designed to convert well on mobile and desktop without feeling pushy or overhyped."
+        steps={processSteps}
+      />
+      <GalleryPreview />
+      <ReviewsPreview />
+      <ServiceAreasPreview />
+      <FaqList
+        title="Common questions before booking lawn care"
+        copy="Use FAQs to lower friction, answer local service questions, and add helpful schema-supported content for search visibility."
+        items={homeFaqs}
+      />
+      <CtaBand
+        title="Ready for a cleaner, more dependable property exterior?"
+        copy="Use this final call to action to drive quote requests from homeowners and small commercial properties looking for reliable local lawn and landscape service."
+      />
+    </>
   );
 }
